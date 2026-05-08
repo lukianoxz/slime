@@ -4,11 +4,11 @@
 ## Objectives
 Slime is prototype for learning
 
-[x] build-system
-[x] boot-system
-[x] video driver
-[ ] keyboard driver
-[x] basic sprite rendering
-[ ] disk manager
-[ ] program manager
-[ ] window manager
+- [x] build-system
+- [x] boot-system
+- [x] video driver
+- [ ] keyboard driver
+- [x] basic sprite rendering
+- [ ] disk manager
+- [ ] program manager
+- [ ] window manager
