@@ -1,9 +1,11 @@
 ; origin = 0x7C00 in linker.ld
 [BITS 16]
-section .slm_boot
+section .section_slm_boot
 
-global _start
-_start:
+extern slm_kernel_entry
+
+global slm_boot_entry
+slm_boot_entry:
     cli ; off interruptions
     mov [boot_disk], dl ; boot disk number
 
@@ -37,6 +39,11 @@ _start:
     mov si, msg_disk_success
     call print
 
+    mov si, msg_exit
+    call print
+    
+    call slm_kernel_entry
+
     jmp $
 
 ; functions
@@ -68,6 +75,9 @@ msg_entry: db "> slime", 13, 10, "> boot succefull initiated", 13, 10, 0
 msg_disk_load: db "> loading disk", 13, 10, 0
 msg_disk_error: db "> error after trying load disk", 13, 10, 0
 msg_disk_success: db "> disk succefull loaded", 13, 10, 0
+
+; final message
+msg_exit: db "> jumping to kernel", 13, 10, 0
 
 boot_disk db 0
 

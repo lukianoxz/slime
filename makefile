@@ -6,11 +6,17 @@ ARCH_PATH := arch/$(ARCH)
 F_BOOT := $(ARCH_PATH)/boot/entry.asm
 F_LINK := $(ARCH_PATH)/linker.ld
 
+# asm targets
+F_ASM := $(shell find $(ARCH_PATH)/cpu -name "*.asm")
+
 # make flags
 # run after compile
 r ?= s
 # debug qemu
 d ?= n
+
+# includes
+include script/compiler_conf.mk
 
 # logic
 all: init clean compile run end
@@ -36,6 +42,8 @@ compile:
 
 	@echo compiling boot
 	@$(call compile_boot)
+	@echo compiling kernel
+	@$(call compile_kernel)
 
 	@echo linking
 	@ld -m elf_i386 -T $(F_LINK) -o build/slime.img build/*.o
@@ -58,4 +66,10 @@ end:
 # sub-rotines
 define compile_boot
 	@nasm -f elf32 $(F_BOOT) -o build/boot.o
+endef
+
+define compile_kernel
+	@$(C_) kernel/entry.c -o build/kernel.o
+	@$(C_) kernel/src/driver/*.c -o build/driver.o
+	@$(foreach f, $(F_ASM), nasm -f elf32 $(f) -o build/$(notdir $(f)).o;)
 endef

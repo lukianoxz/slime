@@ -1,10 +1,17 @@
 OUTPUT_FORMAT (binary)
-ENTRY (_start)
+ENTRY (slm_boot_entry)
 
 SECTIONS {
     . = 0x7C00;
     .boot : {
-        KEEP(*(.slm_boot));
+        KEEP(*(.section_slm_boot));
+    }
+
+    .kernel : {
+        *(.text)
+        *(.data)
+        *(.rodata)
+        *(.bss)
     }
 
     .fill : {
