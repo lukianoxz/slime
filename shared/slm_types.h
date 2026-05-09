@@ -1,5 +1,5 @@
-#ifndef SLMSYS_TYPES_H
-#define SLMSYS_TYPES_H
+#ifndef SLM_TYPES_H
+#define SLM_TYPES_H
 
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;

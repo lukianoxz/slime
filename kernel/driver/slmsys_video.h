@@ -1,8 +1,6 @@
 #ifndef SLMSYS_VIDEO_H
 #define SLMSYS_VIDEO_H
 
-#include "slmsys_include.h"
-
 extern void slmsys_init_video();
 extern void slmsys_quit_video();
 

@@ -7,7 +7,7 @@ F_BOOT := $(ARCH_PATH)/boot/entry.asm
 F_LINK := $(ARCH_PATH)/linker.ld
 
 # asm targets
-F_ASM := $(shell find $(ARCH_PATH)/cpu -name "*.asm")
+F_ARCH_ASM := $(shell find $(ARCH_PATH)/cpu -name "*.asm")
 
 # make flags
 # run after compile
@@ -44,6 +44,8 @@ compile:
 	@$(call compile_boot)
 	@echo compiling kernel
 	@$(call compile_kernel)
+	@echo compiling assembly files
+	@$(call compile_assembly)
 
 	@echo linking
 	@ld -m elf_i386 -T $(F_LINK) -o build/slime.img build/*.o
@@ -71,5 +73,12 @@ endef
 define compile_kernel
 	@$(C_) kernel/entry.c -o build/kernel.o
 	@$(C_) kernel/src/driver/*.c -o build/driver.o
-	@$(foreach f, $(F_ASM), nasm -f elf32 $(f) -o build/$(notdir $(f)).o;)
+endef
+
+define compile_assembly
+	@$(foreach f, $(F_ARCH_ASM), nasm -f elf32 $(f) -o build/$(notdir $(f)).o;)
+endef
+
+define compile_system
+
 endef

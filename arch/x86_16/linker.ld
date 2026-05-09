@@ -7,15 +7,14 @@ SECTIONS {
         KEEP(*(.section_slm_boot));
     }
 
-    .kernel : {
-        *(.text)
-        *(.data)
-        *(.rodata)
-        *(.bss)
-    }
+    . = 0x7E00;
+    .text : { *(.text) }
+    .data : { *(.data) }
+    .rodata : { *(.rodata) }
+    .bss : { *(.bss) }
 
     .fill : {
-        . = 512 * 128;
+        . = 512 * 65;
         SHORT(0);
     }
 }

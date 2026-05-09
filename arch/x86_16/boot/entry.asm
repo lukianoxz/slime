@@ -24,9 +24,14 @@ slm_boot_entry:
     mov si, msg_disk_load
     call print
 
+    ; reset disk controller
+    xor ax, ax ; ax = 0
+    mov dl, [boot_disk]
+    int 0x13
+
     ; load disk sectors
     mov ah, 0x02        ; read sectors
-    mov al, 1           ; sectors to read
+    mov al, 65          ; sectors to read
     mov ch, 0           ; cylinder
     mov cl, 2           ; start from (sectors start in 1)
     mov dh, 0           ; head
@@ -65,7 +70,7 @@ print:
 disk_error:
     mov si, msg_disk_error
     call print
-    hlt
+    jmp $
 
 ; messages (format: string, null terminator (0))
 ; initial message

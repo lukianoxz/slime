@@ -3,9 +3,8 @@ C_FLAGS := \
 	-c \
 	-march=i8086 \
 	-ffreestanding \
-	-fno-stack-protector
-C_INCLUDE := \
-	-Ikernel/include \
-	-Ikernel/driver
+	-fno-stack-protector \
+	-mcmodel=small \
+	-nostdlib
 
-C_ := $(C_COMPILER) $(C_FLAGS) $(C_INCLUDE)
+C_ := $(C_COMPILER) $(C_FLAGS) -Ilibc/include
